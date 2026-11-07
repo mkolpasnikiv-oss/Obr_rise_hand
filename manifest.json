@@ -1,13 +1,14 @@
 {
-  "name": "Hand Raise",
-  "version": "1.0.3",
+  "name": "Hand Raise — Заявки игроков",
+  "version": "1.1.0",
   "manifest_version": 1,
-  "description": "Player hand raising extension",
+  "description": "Игроки поднимают руку, мастер получает заявки в реальном времени.",
   "action": {
     "title": "Поднять руку",
     "icon": "https://mkolpasnikiv-oss.github.io/Obr_rise_hand/icon.svg",
     "popover": "https://mkolpasnikiv-oss.github.io/Obr_rise_hand/index.html",
     "width": 340,
     "height": 520
-  }
+  },
+  "background_url": "https://mkolpasnikiv-oss.github.io/Obr_rise_hand/background.html"
 }
