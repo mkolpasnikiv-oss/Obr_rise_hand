@@ -1,0 +1,12 @@
+{
+  "name": "Hand Raise — Заявки игроков",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "description": "Игроки поднимают руку, мастер получает заявки в реальном времени.",
+  "action": {
+    "title": "Поднять руку",
+    "popover": "./index.html",
+    "width": 340,
+    "height": 520
+  }
+}

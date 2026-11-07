@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Поднять руку</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <div class="brand-mark">✋</div>
+      <div>
+        <h1>Заявки игроков</h1>
+        <p id="role-label" class="muted">Подключение к Owlbear Rodeo…</p>
+      </div>
+      <span id="connection" class="connection" title="Состояние соединения"></span>
+    </header>
+
+    <section id="loading" class="panel loading">
+      <div class="spinner"></div>
+      <p>Подключаемся к комнате…</p>
+    </section>
+
+    <section id="player-view" class="hidden">
+      <div class="panel player-panel">
+        <div class="hand-illustration" id="hand-icon">✋</div>
+        <h2 id="player-title">Вы пока не подняли руку</h2>
+        <p id="player-description" class="muted">Если у вас вопрос или нужна помощь мастера, нажмите кнопку ниже.</p>
+        <button id="hand-button" class="primary-button" type="button">✋ Поднять руку</button>
+        <p id="player-status" class="status-line" aria-live="polite">Вы не отправляли заявку.</p>
+      </div>
+      <div class="hint">Когда мастер увидит вашу заявку, он сможет закрыть её после ответа. Вы также можете отменить её самостоятельно.</div>
+    </section>
+
+    <section id="gm-view" class="hidden">
+      <div class="summary-row">
+        <div>
+          <div class="muted small">АКТИВНЫЕ ЗАЯВКИ</div>
+          <div class="count" id="request-count">0</div>
+        </div>
+        <span class="live-pill"><span></span> В реальном времени</span>
+      </div>
+      <div id="empty-state" class="panel empty-state">
+        <div class="empty-icon">☕</div>
+        <h2>Пока никто не поднял руку</h2>
+        <p class="muted">Когда игрок отправит заявку, она появится здесь автоматически.</p>
+      </div>
+      <div id="request-list" class="request-list" aria-live="polite"></div>
+      <button id="clear-all" class="secondary-button hidden" type="button">Закрыть все заявки</button>
+      <p class="footnote">Заявки существуют, пока участники подключены к комнате. Это оперативная очередь, а не постоянный журнал.</p>
+    </section>
+
+    <section id="error-view" class="panel error-panel hidden">
+      <h2>Не удалось подключиться</h2>
+      <p id="error-message" class="muted">Откройте расширение внутри комнаты Owlbear Rodeo.</p>
+    </section>
+
+    <footer>Hand Raise <span>•</span> расширение для Owlbear Rodeo</footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
