@@ -20,7 +20,7 @@ async function send(type) {
     playerId: state.playerId,
     playerName: state.playerName,
     sentAt: Date.now()
-  });
+  }, { destination: "ALL" });
 }
 
 function updatePlayerView() {
@@ -31,9 +31,9 @@ function updatePlayerView() {
   $("hand-icon").textContent = state.raised ? "🙋" : "✋";
   $("player-title").textContent = state.raised ? "Вы подняли руку" : "Вы пока не подняли руку";
   $("player-description").textContent = state.raised
-    ? "Мастер получил вашу заявку. Пожалуйста, подождите ответа."
+    ? "Ваша заявка видна всем участникам комнаты."
     : "Если у вас вопрос или нужна помощь мастера, нажмите кнопку ниже.";
-  $("player-status").textContent = state.raised ? "Заявка отправлена мастеру." : "Вы не отправляли заявку.";
+  $("player-status").textContent = state.raised ? "Заявка отправлена всем участникам." : "Вы не отправляли заявку.";
 }
 
 function renderRequests() {
@@ -59,7 +59,7 @@ function renderRequests() {
 async function closeRequest(playerId) {
   state.requests.delete(playerId);
   renderRequests();
-  await OBR.broadcast.sendMessage(CHANNEL, { protocol: 1, type: "resolved", playerId, sentAt: Date.now() });
+  await OBR.broadcast.sendMessage(CHANNEL, { protocol: 1, type: "resolved", playerId, sentAt: Date.now() }, { destination: "ALL" });
 }
 
 async function init() {
@@ -83,11 +83,15 @@ async function init() {
         });
         renderRequests();
       }
-      if (message.type === "lowered" && state.role === "GM" && typeof message.playerId === "string") {
+      if ((message.type === "lowered" || message.type === "resolved") && state.role === "GM" && typeof message.playerId === "string") {
         state.requests.delete(message.playerId);
         renderRequests();
       }
       if (message.type === "resolved" && message.playerId === state.playerId && state.role === "PLAYER") {
+        state.raised = false;
+        updatePlayerView();
+      }
+      if (message.type === "lowered" && message.playerId === state.playerId && state.role === "PLAYER") {
         state.raised = false;
         updatePlayerView();
       }
@@ -127,7 +131,7 @@ async function init() {
       state.requests.clear();
       renderRequests();
       for (const playerId of ids) {
-        await OBR.broadcast.sendMessage(CHANNEL, { protocol: 1, type: "resolved", playerId, sentAt: Date.now() });
+        await OBR.broadcast.sendMessage(CHANNEL, { protocol: 1, type: "resolved", playerId, sentAt: Date.now() }, { destination: "ALL" });
       }
     });
   } catch (error) {
